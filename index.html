@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>ARC — Un rompicapo fisico</title>
+  <meta name="description" content="Un piccolo puzzle fisico in stile disegno tecnico: mira, tira la fionda e colpisci ogni bersaglio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <button id="btn-mute" class="mute-btn" aria-label="Attiva/disattiva audio">🔊</button>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <div id="app">
+
+    <!-- ===== SCHERMATA MENU ===== -->
+    <section id="screen-menu" class="screen">
+      <div class="menu-inner">
+        <header class="menu-header">
+          <p class="eyebrow">DISEGNO N. 001 — REV. A</p>
+          <h1>ARC</h1>
+          <p class="subtitle">Fionda, gravità e otto schemi da risolvere.</p>
+        </header>
+
+        <div id="level-grid" class="level-grid" aria-label="Selezione livello"></div>
+
+        <footer class="menu-footer">
+          <p>Trascina la pallina dal punto di ancoraggio, mira e rilascia. Ogni tiro mancato lascia un segno permanente sul progetto: usalo a tuo vantaggio.</p>
+          <button id="btn-share-progress" class="btn-secondary btn-share-progress">📋 Copia i miei risultati</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ===== SCHERMATA DI GIOCO ===== -->
+    <section id="screen-game" class="screen hidden">
+      <div id="hud" class="hud">
+        <button id="btn-menu" class="hud-btn" aria-label="Torna al menu livelli">☰ MENU</button>
+        <span id="hud-level-name" class="hud-level-name">FIG. 00</span>
+        <span id="hud-shots" class="hud-stat">TIRI: 0</span>
+        <span id="hud-targets" class="hud-stat">BERSAGLI: 0/0</span>
+        <span id="hud-ink" class="hud-stat">SEGNI: 0</span>
+        <button id="btn-reset" class="hud-btn" aria-label="Ricomincia livello">↺ RESET</button>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="game-canvas" aria-label="Area di gioco"></canvas>
+
+        <div id="overlay-tutorial" class="overlay hidden">
+          <div class="note-card">
+            <p class="note-label">NOTA DEL PROGETTISTA</p>
+            <p class="note-text">Trascina la pallina dal punto di ancoraggio, mira e rilascia.</p>
+            <p class="note-text">Ogni tiro che manca il bersaglio lascia un segno d'inchiostro permanente: diventerà un ostacolo reale per i tiri successivi. Muoviti con criterio.</p>
+            <button id="btn-tutorial-ok" class="btn-primary">Ho capito</button>
+          </div>
+        </div>
+
+        <div id="overlay-complete" class="overlay hidden">
+          <div class="stamp">
+            <p class="stamp-label">APPROVATO</p>
+            <p id="overlay-stars" class="stamp-stars">★★★</p>
+            <p id="overlay-shots-used" class="stamp-detail">Completato in 0 tiri</p>
+            <div class="stamp-actions">
+              <button id="btn-retry" class="btn-secondary">Riprova</button>
+              <button id="btn-overlay-menu" class="btn-secondary">Menu</button>
+              <button id="btn-share" class="btn-secondary">📋 Copia risultato</button>
+              <button id="btn-next" class="btn-primary">Livello successivo →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
