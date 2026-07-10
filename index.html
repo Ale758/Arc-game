@@ -9,6 +9,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script>
+    // Rete di sicurezza: se QUALSIASI script della pagina genera un errore,
+    // lo mostriamo in chiaro invece di lasciare la pagina bloccata senza
+    // spiegazioni. Deve essere il primissimo script della pagina.
+    window.addEventListener("error", function (e) {
+      var box = document.getElementById("js-error-box");
+      if (!box) {
+        box = document.createElement("div");
+        box.id = "js-error-box";
+        box.style.cssText =
+          "position:fixed;top:0;left:0;right:0;z-index:99999;background:#3a0d0d;" +
+          "color:#fff;padding:14px 16px;font-family:monospace;font-size:12px;" +
+          "white-space:pre-wrap;max-height:45vh;overflow:auto;border-bottom:3px solid #ff5c5c;";
+        document.body.appendChild(box);
+      }
+      var line =
+        "⚠ Errore JS: " + e.message +
+        "\nFile: " + (e.filename || "?") + ":" + (e.lineno || "?") + ":" + (e.colno || "?") +
+        (e.error && e.error.stack ? "\n" + e.error.stack : "");
+      box.textContent += (box.textContent ? "\n\n" : "") + line;
+    });
+  </script>
 </head>
 <body>
   <button id="btn-mute" class="mute-btn" aria-label="Attiva/disattiva audio">🔊</button>
@@ -22,7 +44,6 @@
         <header class="menu-header">
           <p class="eyebrow">DISEGNO N. 001 — REV. B</p>
           <h1>ARC</h1>
-          <p class="subtitle">Fionda, gravità e quattordici schemi da risolvere. Dal livello 9: portali, correnti d'aria e ingranaggi.</p>
         </header>
 
         <div id="daily-card" class="daily-card">
