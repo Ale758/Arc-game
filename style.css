@@ -43,6 +43,7 @@ body {
 
 .screen {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -141,6 +142,236 @@ button:focus-visible {
 
 .btn-share-progress {
   margin-top: 14px;
+}
+
+/* ===== ERRORE FATALE (motore fisico non caricato) ===== */
+
+.fatal-error {
+  border: 1px solid var(--coral);
+  background: rgba(255, 92, 92, 0.08);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.fatal-error p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.fatal-error p:last-child {
+  margin-bottom: 0;
+  color: var(--ink-dim);
+}
+
+/* ===== SFIDA DEL GIORNO ===== */
+
+.daily-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border: 1px solid var(--amber);
+  background: rgba(255, 176, 32, 0.06);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.daily-card-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  margin: 0 0 4px;
+}
+
+.daily-card-date {
+  margin: 0 0 2px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.daily-card-status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-dim);
+}
+
+.daily-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.daily-card-streak {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.menu-toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* ===== PANNELLO (obiettivi) ===== */
+
+.panel {
+  border: 1px solid var(--grid-line);
+  background: rgba(10, 31, 56, 0.96);
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px dashed var(--grid-line);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  margin: 0;
+}
+
+.achievements-list {
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 10px;
+  opacity: 0.45;
+}
+
+.achievement-item.unlocked {
+  opacity: 1;
+}
+
+.achievement-icon {
+  font-size: 20px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.achievement-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.achievement-name {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.achievement-desc {
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+/* ===== EDITOR DI LIVELLI ===== */
+
+.editor-toolbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
+}
+
+.tool-btn {
+  background: transparent;
+  border: 1px solid var(--grid-line);
+  color: var(--ink-dim);
+  font-family: var(--font-body);
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+.tool-btn:hover {
+  border-color: var(--amber);
+  color: var(--ink);
+}
+
+.tool-btn.active {
+  border-color: var(--amber);
+  background: rgba(255, 176, 32, 0.12);
+  color: var(--amber);
+}
+
+.editor-panel {
+  padding: 14px 16px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.editor-status {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin: 0 0 12px;
+}
+
+.editor-status.warn {
+  color: var(--amber);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.editor-code {
+  width: 100%;
+  background: rgba(232, 238, 245, 0.06);
+  border: 1px solid var(--grid-line);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 11px;
+  padding: 10px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.editor-copy-btn {
+  margin-bottom: 20px;
+}
+
+.editor-import {
+  border-top: 1px dashed var(--grid-line);
+  padding-top: 16px;
+}
+
+.editor-import-label {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin: 0 0 8px;
+}
+
+.editor-import-status {
+  font-size: 12px;
+  color: var(--coral);
+  margin: 6px 0 0;
+  min-height: 16px;
 }
 
 /* ===== MENU ===== */
@@ -302,7 +533,8 @@ button:focus-visible {
   overflow: hidden;
 }
 
-#game-canvas {
+#game-canvas,
+#editor-canvas {
   width: 100%;
   height: auto;
   max-width: 960px;

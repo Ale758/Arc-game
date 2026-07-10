@@ -2,12 +2,19 @@
 
 Un piccolo puzzle fisico stile "disegno tecnico": trascini la pallina dal
 punto di ancoraggio, miri, rilasci e cerchi di colpire tutti i bersagli
-usando meno tiri possibile. 8 livelli, difficoltà crescente.
+usando meno tiri possibile. 14 livelli, difficoltà crescente, più una sfida
+giornaliera, obiettivi ed un editor per creare e condividere i tuoi livelli.
 
 **Meccanica firma:** ogni tiro che non centra il bersaglio lascia sul campo
 un segno d'inchiostro permanente, che diventa un ostacolo fisico reale per
 i tiri successivi nello stesso livello. Più sbagli, più il progetto si
 complica — quindi conviene ragionare prima di tirare.
+
+Dal livello 9 compaiono nuove meccaniche: **portali** (cerchi ciano
+collegati, teletrasportano la pallina mantenendo la velocità), **correnti
+d'aria** (zone che spingono la pallina in una direzione, utili per
+attraversare voragini troppo larghe) e **ingranaggi** (muri rotanti da
+aggirare o sfruttare come deflettori).
 
 Tecnologia: solo HTML + CSS + JavaScript vanilla, fisica con
 [Matter.js](https://brm.io/matter-js/) caricato da CDN. Nessuna build,
@@ -18,9 +25,11 @@ arc-game/
 ├── index.html
 ├── style.css
 └── js/
-    ├── audio.js    ← motore audio (suoni sintetizzati, nessun file esterno)
-    ├── levels.js   ← definizione degli 8 livelli (modifica qui per tarare la difficoltà)
-    └── game.js     ← motore di gioco (fisica, inchiostro, particelle, input, rendering)
+    ├── audio.js          ← motore audio (suoni sintetizzati, nessun file esterno)
+    ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
+    ├── levels.js         ← definizione dei 14 livelli (modifica qui per tarare la difficoltà)
+    ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, modalità, rendering)
+    └── editor.js         ← editor di livelli (piazzamento, playtest, export/import codice)
 ```
 
 ## Audio
@@ -66,6 +75,64 @@ da incollare ovunque. Se pubblichi il gioco, incolla l'URL nella costante
 `SHARE_URL` in cima a `game.js`: verrà aggiunto automaticamente ai testi
 copiati.
 
+## Sfida del giorno
+
+Ogni giorno il gioco seleziona in modo deterministico un livello dalla
+lista `LEVELS` (in base alla data, uguale per tutti i giocatori nello
+stesso fuso orario) e lo propone nella scheda "SFIDA DEL GIORNO" in cima al
+menu. Completarla aggiorna una serie di giorni consecutivi (streak, salvata
+in `localStorage`); saltare un giorno la azzera. La data usata è quella
+**locale del dispositivo**, non sincronizzata via rete: due giocatori in
+fusi orari molto diversi potrebbero ricevere il livello del giorno con
+qualche ora di scarto — una semplificazione accettabile per un progetto di
+questa scala. Logica in `game.js`, cerca `updateDailyStreak`.
+
+## Obiettivi
+
+8 obiettivi sbloccabili (primo livello, livello senza segni d'inchiostro,
+completamento in un solo tiro, tutti i livelli a 3 stelle, un livello con
+portale, serie di 3 e 7 giorni, primo livello esportato dall'editor).
+Definiti in `js/achievements.js`; per aggiungerne uno nuovo basta aggiungere
+una voce a `DEFS` e chiamare `Achievements.unlock('tuo-id')` nel punto
+giusto di `game.js`.
+
+## Editor di livelli
+
+Dal menu, "✏️ Editor di livelli" apre uno strumento per disegnare i tuoi
+schemi: trascina per creare muri, clicca per piazzare bersagli o spostare
+il lanciatore. "▶ Playtest" carica subito il livello nel motore di gioco
+vero (fisica inclusa) così puoi provarlo prima di condividerlo — è anche il
+modo in cui **io** consiglio di verificare che un livello sia risolvibile,
+dato che non ho potuto testarlo in un browser durante lo sviluppo.
+"📤 Esporta codice" genera una stringa di testo (JSON compresso in base64)
+che chiunque può incollare in "📥 Carica e gioca" per provare il tuo
+livello — nessun server, nessun account, solo copia-incolla.
+
+La v1 dell'editor supporta solo muri e bersagli su terreno a larghezza
+piena (niente voragini, portali, correnti o ingranaggi), per ridurre il
+rischio di livelli impossibili da completare. Per usare le meccaniche
+avanzate, modifica `LEVELS` in `js/levels.js` a mano seguendo lo schema dei
+livelli 9-14.
+
+## Risoluzione problemi
+
+**Il menu si vede ma la lista livelli è vuota e non succede nulla ai click.**
+Quasi sempre è il motore fisico (Matter.js) che non riesce a caricarsi da
+nessuna delle fonti online — capita su reti scolastiche/aziendali che
+filtrano i CDN esterni. Dalla versione attuale il gioco prova tre fonti in
+sequenza (cdnjs → jsdelivr → unpkg) e, se falliscono tutte, mostra un
+messaggio chiaro invece di restare bloccato senza spiegazioni. Se lo vedi:
+prova a ricaricare, cambiare rete (es. dati mobili) o browser. Per la
+massima affidabilità puoi anche scaricare `matter.min.js` e metterlo dentro
+`js/` nel tuo repository, poi cambiare il primo `<script src="...">` in
+`index.html` con `<script src="js/matter.min.js"></script>` — così il gioco
+non dipende più da nessun servizio esterno.
+
+**Il sito pubblicato mostra una versione più vecchia del gioco.**
+Controlla che Vercel abbia effettivamente ricevuto l'ultimo push (tab
+"Deployments" del progetto su vercel.com) e prova un refresh forzato del
+browser (Ctrl/Cmd+Shift+R) per escludere la cache.
+
 ## 1. Provarlo in locale
 
 Puoi aprire direttamente `index.html` nel browser con doppio click.
@@ -92,8 +159,13 @@ cima a `js/game.js`:
 - `POWER_SCALE` — quanto è potente il lancio rispetto alla trazione
 - `MAX_DRAG` — quanto puoi tirare indietro la fionda
 - `engine.world.gravity.y` (in `buildLevel`) — forza di gravità
+- `PORTAL_COOLDOWN_MS` — tempo minimo tra due teletrasporti consecutivi
 
-e in `js/levels.js`: posizione di ostacoli/bersagli/`par` per ogni livello.
+e in `js/levels.js`, livello per livello: posizione di ostacoli/bersagli/
+`par`, `fx`/`fy` delle zone di vento (`windZones`) e `speed` degli ostacoli
+rotanti/mobili (`type: "rotator"` o campo `movement`) — questi ultimi due
+sono i valori con cui sono stato più prudente, non avendo potuto vederli
+in azione.
 
 ## 2. Pubblicare su GitHub
 
@@ -138,12 +210,11 @@ vercel
 
 ## Idee per continuare
 
-- Più livelli in `LEVELS` in `js/levels.js`, magari con nuove combinazioni
-  che sfruttano l'inchiostro accumulato (es. bersagli raggiungibili solo
-  costruendo una rampa con i propri tiri falliti)
 - Una modalità "difficile" a tiri limitati per livello, per chi cerca la
   vera sfida da classifica
 - Musica ambientale procedurale di sottofondo (in `js/audio.js` c'è già
   tutto l'occorrente per generare un drone/pad con gli oscillatori)
-- Salvataggio progressi già incluso via `localStorage` (funziona anche su
-  itch.io e Vercel, è per-browser/per-dispositivo)
+- Editor v2: rotazione dei muri, voragini, e magari anche portali/vento
+  per chi vuole progettare livelli davvero avanzati
+- Una classifica condivisa richiederebbe un piccolo backend (oggi tutto è
+  locale al browser, per restare a costo zero e senza account)

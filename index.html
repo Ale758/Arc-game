@@ -20,10 +20,27 @@
     <section id="screen-menu" class="screen">
       <div class="menu-inner">
         <header class="menu-header">
-          <p class="eyebrow">DISEGNO N. 001 — REV. A</p>
+          <p class="eyebrow">DISEGNO N. 001 — REV. B</p>
           <h1>ARC</h1>
-          <p class="subtitle">Fionda, gravità e otto schemi da risolvere.</p>
+          <p class="subtitle">Fionda, gravità e quattordici schemi da risolvere. Dal livello 9: portali, correnti d'aria e ingranaggi.</p>
         </header>
+
+        <div id="daily-card" class="daily-card">
+          <div class="daily-card-info">
+            <p class="daily-card-label">SFIDA DEL GIORNO</p>
+            <p id="daily-date" class="daily-card-date">—</p>
+            <p id="daily-status" class="daily-card-status">—</p>
+          </div>
+          <div class="daily-card-actions">
+            <span id="daily-streak" class="daily-card-streak">🔥 0</span>
+            <button id="btn-daily-play" class="btn-primary">Gioca</button>
+          </div>
+        </div>
+
+        <div class="menu-toolbar">
+          <button id="btn-open-achievements" class="btn-secondary">🏆 Obiettivi</button>
+          <button id="btn-open-editor" class="btn-secondary">✏️ Editor di livelli</button>
+        </div>
 
         <div id="level-grid" class="level-grid" aria-label="Selezione livello"></div>
 
@@ -31,6 +48,16 @@
           <p>Trascina la pallina dal punto di ancoraggio, mira e rilascia. Ogni tiro mancato lascia un segno permanente sul progetto: usalo a tuo vantaggio.</p>
           <button id="btn-share-progress" class="btn-secondary btn-share-progress">📋 Copia i miei risultati</button>
         </footer>
+      </div>
+
+      <div id="overlay-achievements" class="overlay hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <p class="panel-title">OBIETTIVI <span id="achievements-count">0/8</span></p>
+            <button id="btn-achievements-close" class="hud-btn" aria-label="Chiudi">✕</button>
+          </div>
+          <div id="achievements-list" class="achievements-list"></div>
+        </div>
       </div>
     </section>
 
@@ -53,6 +80,7 @@
             <p class="note-label">NOTA DEL PROGETTISTA</p>
             <p class="note-text">Trascina la pallina dal punto di ancoraggio, mira e rilascia.</p>
             <p class="note-text">Ogni tiro che manca il bersaglio lascia un segno d'inchiostro permanente: diventerà un ostacolo reale per i tiri successivi. Muoviti con criterio.</p>
+            <p class="note-text">Nei livelli avanzati troverai anche portali (cerchi ciano collegati), correnti d'aria (frecce) e ingranaggi rotanti.</p>
             <button id="btn-tutorial-ok" class="btn-primary">Ho capito</button>
           </div>
         </div>
@@ -73,11 +101,65 @@
       </div>
     </section>
 
+    <!-- ===== SCHERMATA EDITOR DI LIVELLI ===== -->
+    <section id="screen-editor" class="screen hidden">
+      <div class="hud">
+        <button id="btn-editor-menu" class="hud-btn" aria-label="Torna al menu">☰ MENU</button>
+        <span class="hud-level-name">EDITOR DI LIVELLI</span>
+        <div class="editor-toolbar">
+          <button id="tool-wall" class="tool-btn" title="Disegna un muro (trascina)">▭ Muro</button>
+          <button id="tool-target" class="tool-btn" title="Piazza un bersaglio (clic)">◎ Bersaglio</button>
+          <button id="tool-launcher" class="tool-btn" title="Sposta il lanciatore (clic)">↳ Lanciatore</button>
+          <button id="tool-delete" class="tool-btn" title="Cancella un oggetto (clic)">✕ Cancella</button>
+        </div>
+        <button id="btn-editor-clear" class="hud-btn">🗑 Svuota</button>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="editor-canvas" aria-label="Area editor"></canvas>
+      </div>
+
+      <div class="editor-panel">
+        <p id="editor-status" class="editor-status">Aggiungi almeno un bersaglio prima di testare o esportare.</p>
+        <div class="editor-actions">
+          <button id="btn-editor-playtest" class="btn-primary">▶ Playtest</button>
+          <button id="btn-editor-export" class="btn-secondary">📤 Esporta codice</button>
+        </div>
+        <textarea id="editor-export-output" class="editor-code hidden" readonly rows="3"></textarea>
+        <button id="btn-editor-copy-code" class="btn-secondary editor-copy-btn">📋 Copia codice</button>
+
+        <div class="editor-import">
+          <p class="editor-import-label">Hai un codice di un amico? Incollalo qui:</p>
+          <textarea id="editor-import-input" class="editor-code" rows="3" placeholder="Incolla qui il codice del livello…"></textarea>
+          <button id="btn-editor-import" class="btn-secondary">📥 Carica e gioca</button>
+          <p id="editor-import-status" class="editor-import-status"></p>
+        </div>
+      </div>
+    </section>
+
   </div>
 
+  <!--
+    Matter.js viene caricato provando più CDN in sequenza: se il primo è
+    bloccato dalla rete (capita su reti scolastiche/aziendali con filtri),
+    si prova il successivo. document.write qui è sicuro: siamo ancora
+    durante il parsing iniziale della pagina, prima che il body sia chiuso.
+  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    if (typeof Matter === "undefined") {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"><\/script>');
+    }
+  </script>
+  <script>
+    if (typeof Matter === "undefined") {
+      document.write('<script src="https://unpkg.com/matter-js@0.19.0/build/matter.min.js"><\/script>');
+    }
+  </script>
   <script src="js/audio.js"></script>
+  <script src="js/achievements.js"></script>
   <script src="js/levels.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/editor.js"></script>
 </body>
 </html>
