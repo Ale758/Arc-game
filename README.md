@@ -2,19 +2,21 @@
 
 Un piccolo puzzle fisico stile "disegno tecnico": trascini la pallina dal
 punto di ancoraggio, miri, rilasci e cerchi di colpire tutti i bersagli
-usando meno tiri possibile. 14 livelli, difficoltà crescente, più una sfida
+usando meno tiri possibile. 19 livelli, difficoltà crescente, più una sfida
 giornaliera, obiettivi ed un editor per creare e condividere i tuoi livelli.
 
-**Meccanica firma:** ogni tiro che non centra il bersaglio lascia sul campo
-un segno d'inchiostro permanente, che diventa un ostacolo fisico reale per
-i tiri successivi nello stesso livello. Più sbagli, più il progetto si
-complica — quindi conviene ragionare prima di tirare.
+**Meccanica firma:** ogni tiro lascia sul campo una traccia d'inchiostro
+permanente — la cronologia visiva dei tuoi tentativi su quel livello. È un
+segno puramente estetico: non blocca né devia i tiri successivi.
 
 Dal livello 9 compaiono nuove meccaniche: **portali** (cerchi ciano
 collegati, teletrasportano la pallina mantenendo la velocità), **correnti
 d'aria** (zone che spingono la pallina in una direzione, utili per
 attraversare voragini troppo larghe) e **ingranaggi** (muri rotanti da
-aggirare o sfruttare come deflettori).
+aggirare o sfruttare come deflettori). Dal livello 15: **trampolini** (pad
+rosa acceso, rimbalzo molto più elastico del normale) e **zone a gravità
+leggera** (annullano parzialmente la gravità mentre la pallina è dentro,
+allungando l'arco del tiro).
 
 Tecnologia: solo HTML + CSS + JavaScript vanilla, fisica con
 [Matter.js](https://brm.io/matter-js/) caricato da CDN. Nessuna build,
@@ -27,7 +29,7 @@ arc-game/
 └── js/
     ├── audio.js          ← motore audio (suoni sintetizzati, nessun file esterno)
     ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
-    ├── levels.js         ← definizione dei 14 livelli (modifica qui per tarare la difficoltà)
+    ├── levels.js         ← definizione dei 19 livelli (modifica qui per tarare la difficoltà)
     ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, modalità, rendering)
     └── editor.js         ← editor di livelli (piazzamento, playtest, export/import codice)
 ```
@@ -49,13 +51,13 @@ bisogno di alcun asset.
 
 ## Inchiostro permanente, juice, tutorial e condivisione
 
-**Inchiostro permanente** — durante il volo, la pallina disegna la propria
-traiettoria in tempo reale (linea ambra piena). Se il tiro non centra il
-bersaglio, quella linea "si asciuga" (diventa tratteggiata e spenta) e si
-trasforma in un vero ostacolo fisico per i tiri successivi dello stesso
-livello. È gestita in `commitTrail()` / `recordTrailPoint()` in `game.js`;
-i parametri da tarare sono `TRAIL_MIN_DIST`, `TRAIL_THICKNESS` e
-`TRAIL_EXCLUDE_LAUNCHER_R` in cima al file.
+**Scia d'inchiostro** — durante il volo, la pallina disegna la propria
+traiettoria in tempo reale (linea ambra piena). Quando il tiro finisce,
+quella linea "si asciuga" (diventa tratteggiata e spenta) e resta visibile
+per il resto del livello come cronologia dei tentativi — ma è solo un
+segno visivo: non ha alcun effetto sulla fisica dei tiri successivi. È
+gestita in `commitTrail()` / `recordTrailPoint()` in `game.js`; i parametri
+da tarare sono `TRAIL_MIN_DIST` e `TRAIL_THICKNESS` in cima al file.
 
 **Juice** — piccole particelle "a tratteggio tecnico" sugli impatti e sui
 bersagli colpiti, uno scuotimento leggero della schermata (`shakeMag`) e
@@ -162,9 +164,11 @@ cima a `js/game.js`:
 - `PORTAL_COOLDOWN_MS` — tempo minimo tra due teletrasporti consecutivi
 
 e in `js/levels.js`, livello per livello: posizione di ostacoli/bersagli/
-`par`, `fx`/`fy` delle zone di vento (`windZones`) e `speed` degli ostacoli
-rotanti/mobili (`type: "rotator"` o campo `movement`) — questi ultimi due
-sono i valori con cui sono stato più prudente, non avendo potuto vederli
+`par`, `fx`/`fy` delle zone di vento (`windZones`), `speed` degli ostacoli
+rotanti/mobili (`type: "rotator"` o campo `movement`), `restitution` dei
+trampolini (`type: "bouncer"`, default 1.6) e `strength` delle zone a
+gravità leggera (`gravityZones`, default 0.7, 1 = gravità azzerata del
+tutto) — questi ultimi sono i valori con cui sono stato più prudente, non avendo potuto vederli
 in azione.
 
 ## 2. Pubblicare su GitHub

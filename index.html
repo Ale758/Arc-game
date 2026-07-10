@@ -10,8 +10,8 @@
   <meta name="description" content="Un piccolo puzzle fisico in stile disegno tecnico: mira, tira la fionda e colpisci ogni bersaglio." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=5" />
   <script>
     // Rete di sicurezza: se QUALSIASI script della pagina genera un errore
     // — sia un errore di esecuzione, sia un file che non si carica affatto
@@ -30,7 +30,7 @@
           box.style.cssText =
             "position:fixed;top:0;left:0;right:0;z-index:99999;background:#3a0d0d;" +
             "color:#fff;padding:14px 16px;font-family:monospace;font-size:12px;" +
-            "white-space:pre-wrap;max-height:45vh;overflow:auto;border-bottom:3px solid #ff5c5c;";
+            "white-space:pre-wrap;max-height:45vh;overflow:auto;border-bottom:3px solid #ff3860;";
           document.body.appendChild(box);
         }
         var line;
@@ -59,7 +59,7 @@
     <section id="screen-menu" class="screen">
       <div class="menu-inner">
         <header class="menu-header">
-          <p class="eyebrow">DISEGNO N. 001 — REV. B</p>
+          <p class="eyebrow">★ SELEZIONA LIVELLO ★</p>
           <h1>ARC</h1>
         </header>
 
@@ -83,7 +83,7 @@
         <div id="level-grid" class="level-grid" aria-label="Selezione livello"></div>
 
         <footer class="menu-footer">
-          <p>Trascina la pallina dal punto di ancoraggio, mira e rilascia. Ogni tiro mancato lascia un segno permanente sul progetto: usalo a tuo vantaggio.</p>
+          <p>Trascina la pallina dal punto di ancoraggio, mira e rilascia. Colpisci tutti i bersagli usando meno tiri possibile.</p>
           <button id="btn-share-progress" class="btn-secondary btn-share-progress">📋 Copia i miei risultati</button>
         </footer>
       </div>
@@ -115,9 +115,9 @@
 
         <div id="overlay-tutorial" class="overlay hidden">
           <div class="note-card">
-            <p class="note-label">NOTA DEL PROGETTISTA</p>
+            <p class="note-label">COME SI GIOCA</p>
             <p class="note-text">Trascina la pallina dal punto di ancoraggio, mira e rilascia.</p>
-            <p class="note-text">Ogni tiro che manca il bersaglio lascia un segno d'inchiostro permanente: diventerà un ostacolo reale per i tiri successivi. Muoviti con criterio.</p>
+            <p class="note-text">Ogni tiro lascia una traccia visibile sul progetto — è solo la cronologia dei tuoi tentativi, non blocca i tiri successivi.</p>
             <p class="note-text">Nei livelli avanzati troverai anche portali (cerchi ciano collegati), correnti d'aria (frecce) e ingranaggi rotanti.</p>
             <button id="btn-tutorial-ok" class="btn-primary">Ho capito</button>
           </div>
@@ -125,7 +125,7 @@
 
         <div id="overlay-complete" class="overlay hidden">
           <div class="stamp">
-            <p class="stamp-label">APPROVATO</p>
+            <p class="stamp-label">LIVELLO COMPLETATO</p>
             <p id="overlay-stars" class="stamp-stars">★★★</p>
             <p id="overlay-shots-used" class="stamp-detail">Completato in 0 tiri</p>
             <div class="stamp-actions">
@@ -194,10 +194,10 @@
       document.write('<script src="https://unpkg.com/matter-js@0.19.0/build/matter.min.js"><\/script>');
     }
   </script>
-  <script src="js/audio.js?v=3"></script>
-  <script src="js/achievements.js?v=3"></script>
-  <script src="js/levels.js?v=3"></script>
-  <script src="js/game.js?v=3"></script>
-  <script src="js/editor.js?v=3"></script>
+  <script src="js/audio.js?v=5"></script>
+  <script src="js/achievements.js?v=5"></script>
+  <script src="js/levels.js?v=5"></script>
+  <script src="js/game.js?v=5"></script>
+  <script src="js/editor.js?v=5"></script>
 </body>
 </html>
