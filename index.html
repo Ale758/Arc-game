@@ -2,34 +2,51 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
   <title>ARC — Un rompicapo fisico</title>
   <meta name="description" content="Un piccolo puzzle fisico in stile disegno tecnico: mira, tira la fionda e colpisci ogni bersaglio." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
   <script>
-    // Rete di sicurezza: se QUALSIASI script della pagina genera un errore,
-    // lo mostriamo in chiaro invece di lasciare la pagina bloccata senza
-    // spiegazioni. Deve essere il primissimo script della pagina.
-    window.addEventListener("error", function (e) {
-      var box = document.getElementById("js-error-box");
-      if (!box) {
-        box = document.createElement("div");
-        box.id = "js-error-box";
-        box.style.cssText =
-          "position:fixed;top:0;left:0;right:0;z-index:99999;background:#3a0d0d;" +
-          "color:#fff;padding:14px 16px;font-family:monospace;font-size:12px;" +
-          "white-space:pre-wrap;max-height:45vh;overflow:auto;border-bottom:3px solid #ff5c5c;";
-        document.body.appendChild(box);
-      }
-      var line =
-        "⚠ Errore JS: " + e.message +
-        "\nFile: " + (e.filename || "?") + ":" + (e.lineno || "?") + ":" + (e.colno || "?") +
-        (e.error && e.error.stack ? "\n" + e.error.stack : "");
-      box.textContent += (box.textContent ? "\n\n" : "") + line;
-    });
+    // Rete di sicurezza: se QUALSIASI script della pagina genera un errore
+    // — sia un errore di esecuzione, sia un file che non si carica affatto
+    // (es. 404) — lo mostriamo in chiaro invece di lasciare la pagina
+    // bloccata senza spiegazioni. Deve essere il primissimo script della
+    // pagina. Il terzo parametro "true" (capture) è necessario per
+    // intercettare anche i fallimenti di caricamento delle risorse, che
+    // altrimenti non "risalgono" fino a window.
+    window.addEventListener(
+      "error",
+      function (e) {
+        var box = document.getElementById("js-error-box");
+        if (!box) {
+          box = document.createElement("div");
+          box.id = "js-error-box";
+          box.style.cssText =
+            "position:fixed;top:0;left:0;right:0;z-index:99999;background:#3a0d0d;" +
+            "color:#fff;padding:14px 16px;font-family:monospace;font-size:12px;" +
+            "white-space:pre-wrap;max-height:45vh;overflow:auto;border-bottom:3px solid #ff5c5c;";
+          document.body.appendChild(box);
+        }
+        var line;
+        var target = e.target;
+        if (target && target !== window && (target.src || target.href)) {
+          line = "⚠ Risorsa NON CARICATA: " + (target.src || target.href) + " (tag <" + target.tagName + ">)";
+        } else {
+          line =
+            "⚠ Errore JS: " + e.message +
+            "\nFile: " + (e.filename || "?") + ":" + (e.lineno || "?") + ":" + (e.colno || "?") +
+            (e.error && e.error.stack ? "\n" + e.error.stack : "");
+        }
+        box.textContent += (box.textContent ? "\n\n" : "") + line;
+      },
+      true
+    );
   </script>
 </head>
 <body>
@@ -177,10 +194,10 @@
       document.write('<script src="https://unpkg.com/matter-js@0.19.0/build/matter.min.js"><\/script>');
     }
   </script>
-  <script src="js/audio.js"></script>
-  <script src="js/achievements.js"></script>
-  <script src="js/levels.js"></script>
-  <script src="js/game.js"></script>
-  <script src="js/editor.js"></script>
+  <script src="js/audio.js?v=3"></script>
+  <script src="js/achievements.js?v=3"></script>
+  <script src="js/levels.js?v=3"></script>
+  <script src="js/game.js?v=3"></script>
+  <script src="js/editor.js?v=3"></script>
 </body>
 </html>
