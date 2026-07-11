@@ -26,14 +26,43 @@ nessuna dipendenza da installare.
 arc-game/
 ├── index.html
 ├── style.css
+├── manifest.json      ← manifest PWA (nome, icone, colori) — rende il gioco installabile
+├── sw.js              ← service worker: cache offline dei file del gioco
+├── icons/             ← icone dell'app (generate in stile pixel art)
 └── js/
-    ├── audio.js          ← motore audio (suoni sintetizzati, nessun file esterno)
+    ├── audio.js          ← motore audio (suoni + musica sintetizzati, nessun file esterno)
     ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
     ├── levels.js         ← definizione dei 19 livelli (modifica qui per tarare la difficoltà)
-    ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, modalità, rendering)
+    ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, skin, tastiera, rendering)
     └── editor.js         ← editor di livelli (piazzamento, playtest, export/import codice)
 ```
 
+## Musica, skin, tastiera e installazione
+
+**Musica di sottofondo** — un giro di basso chiptune generato con oscillatori
+(stesso principio degli effetti sonori, zero file audio). Parte da sola al
+primo click/tocco sulla pagina, insieme allo sblocco audio, e segue lo
+stesso tasto muto 🔊/🔇 degli effetti. Per cambiarla, il pattern di note è
+in `MUSIC_BASS` in cima a `js/audio.js`.
+
+**Skin della pallina** — dal menu, "🎨 Personalizza": 4 colori, 3 dei quali
+si sbloccano ottenendo un obiettivo specifico (mostrato nel pannello). La
+scelta resta salvata in `localStorage`. Per aggiungerne una, basta una riga
+nell'array `SKINS` in `game.js`.
+
+**Controlli da tastiera** — alternativa al trascinamento: frecce
+sinistra/destra per ruotare la mira, su/giù per la potenza, Spazio o Invio
+per lanciare. Utile su desktop.
+
+**Installabile come app (PWA)** — su Chrome/Edge (desktop e Android) compare
+l'opzione "Installa app" o "Aggiungi a schermata Home"; su iOS Safari si fa
+da Condividi → "Aggiungi a Home". Il service worker (`sw.js`) mette in cache
+i file del gioco, quindi funziona anche offline una volta aperto la prima
+volta. **Importante:** ad ogni modifica ai file, `sw.js` va aggiornato
+cambiando `CACHE_NAME` (es. `arc-game-v6` → `arc-game-v7`), altrimenti chi
+ha già installato l'app potrebbe continuare a vedere la versione vecchia
+dalla cache. Su Vercel/GitHub Pages non serve altro: manifest e service
+worker funzionano automaticamente via HTTPS.
 ## Audio
 
 Tutti i suoni (lancio, rimbalzo, bersaglio colpito, livello completato, click
@@ -118,6 +147,13 @@ livelli 9-14.
 
 ## Risoluzione problemi
 
+**Dopo un aggiornamento, il gioco mostra ancora la versione vecchia.**
+Da quando c'è il service worker (`sw.js`), oltre alla cache del browser
+normale c'è anche la sua cache offline. Se un hard refresh (Ctrl/Cmd+Shift+R)
+non basta: apri DevTools → Application → Service Workers → "Unregister", poi
+ricarica. Ricordati anche di alzare `CACHE_NAME` in `sw.js` ad ogni modifica
+(vedi sezione sopra) — è il modo per evitare il problema alla radice.
+
 **Il menu si vede ma la lista livelli è vuota e non succede nulla ai click.**
 Quasi sempre è il motore fisico (Matter.js) che non riesce a caricarsi da
 nessuna delle fonti online — capita su reti scolastiche/aziendali che
@@ -162,11 +198,13 @@ cima a `js/game.js`:
 - `MAX_DRAG` — quanto puoi tirare indietro la fionda
 - `engine.world.gravity.y` (in `buildLevel`) — forza di gravità
 - `PORTAL_COOLDOWN_MS` — tempo minimo tra due teletrasporti consecutivi
+- `restitution: 0.72` (in `spawnBall`) — elasticità generale della pallina
+  su tutte le superfici; più alto = rimbalza di più ovunque
 
 e in `js/levels.js`, livello per livello: posizione di ostacoli/bersagli/
 `par`, `fx`/`fy` delle zone di vento (`windZones`), `speed` degli ostacoli
 rotanti/mobili (`type: "rotator"` o campo `movement`), `restitution` dei
-trampolini (`type: "bouncer"`, default 1.6) e `strength` delle zone a
+trampolini (`type: "bouncer"`, default 2.1) e `strength` delle zone a
 gravità leggera (`gravityZones`, default 0.7, 1 = gravità azzerata del
 tutto) — questi ultimi sono i valori con cui sono stato più prudente, non avendo potuto vederli
 in azione.

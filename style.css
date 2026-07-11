@@ -230,6 +230,58 @@ button:focus-visible {
   margin-bottom: 24px;
 }
 
+.skins-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.skin-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-deep);
+  border: 3px solid var(--outline);
+  color: var(--ink);
+  padding: 12px 8px;
+  box-shadow: 3px 3px 0 var(--outline);
+  transition: transform 0.05s ease;
+}
+
+.skin-swatch:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.skin-swatch.selected {
+  border-color: var(--amber);
+  box-shadow: 3px 3px 0 var(--amber);
+}
+
+.skin-swatch.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.skin-swatch-dot {
+  width: 28px;
+  height: 28px;
+  background: var(--swatch-color, var(--amber));
+  border: 2px solid var(--outline);
+}
+
+.skin-swatch-name {
+  font-size: 15px;
+}
+
+.skin-swatch-req {
+  font-size: 12px;
+  color: var(--ink-dim);
+  text-align: center;
+  line-height: 1.3;
+}
+
 /* ===== PANNELLO (obiettivi) ===== */
 
 .panel {

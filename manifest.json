@@ -1,0 +1,16 @@
+{
+  "name": "ARC — Un rompicapo fisico",
+  "short_name": "ARC",
+  "description": "Fionda, gravità e diciannove schemi da risolvere. Portali, correnti d'aria, ingranaggi, trampolini e zone a gravità leggera.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f0821",
+  "theme_color": "#1b1035",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
