@@ -130,20 +130,21 @@ giusto di `game.js`.
 ## Editor di livelli
 
 Dal menu, "✏️ Editor di livelli" apre uno strumento per disegnare i tuoi
-schemi: trascina per creare muri, clicca per piazzare bersagli o spostare
-il lanciatore. "▶ Playtest" carica subito il livello nel motore di gioco
-vero (fisica inclusa) così puoi provarlo prima di condividerlo — è anche il
-modo in cui **io** consiglio di verificare che un livello sia risolvibile,
-dato che non ho potuto testarlo in un browser durante lo sviluppo.
-"📤 Esporta codice" genera una stringa di testo (JSON compresso in base64)
-che chiunque può incollare in "📥 Carica e gioca" per provare il tuo
-livello — nessun server, nessun account, solo copia-incolla.
+schemi: trascina per creare muri o trampolini, clicca per piazzare
+bersagli o spostare il lanciatore, clicca due volte per collegare una
+coppia di portali, trascina per disegnare zone vento o antigravità.
+"▶ Playtest" carica subito il livello nel motore di gioco vero (fisica
+inclusa) così puoi provarlo prima di condividerlo — è anche il modo in cui
+**io** consiglio di verificare che un livello sia risolvibile, dato che non
+ho potuto testarlo in un browser durante lo sviluppo. "📤 Esporta codice"
+genera una stringa di testo (JSON compresso in base64) che chiunque può
+incollare in "📥 Carica e gioca" per provare il tuo livello — nessun
+server, nessun account, solo copia-incolla.
 
-La v1 dell'editor supporta solo muri e bersagli su terreno a larghezza
-piena (niente voragini, portali, correnti o ingranaggi), per ridurre il
-rischio di livelli impossibili da completare. Per usare le meccaniche
-avanzate, modifica `LEVELS` in `js/levels.js` a mano seguendo lo schema dei
-livelli 9-14.
+Il terreno resta sempre a larghezza piena (niente voragini disegnabili a
+mano), per ridurre il rischio di livelli impossibili da completare — se
+vuoi una voragine, l'unica via resta modificare `LEVELS` in `js/levels.js`
+a mano seguendo lo schema dei livelli esistenti.
 
 ## Risoluzione problemi
 
@@ -204,7 +205,9 @@ cima a `js/game.js`:
 e in `js/levels.js`, livello per livello: posizione di ostacoli/bersagli/
 `par`, `fx`/`fy` delle zone di vento (`windZones`), `speed` degli ostacoli
 rotanti/mobili (`type: "rotator"` o campo `movement`), `restitution` dei
-trampolini (`type: "bouncer"`, default 2.1) e `strength` delle zone a
+trampolini (`type: "bouncer"`, default 5.25 — un valore molto aggressivo,
+se la pallina schizza fuori schermo quasi sempre è la prima cosa da
+abbassare) e `strength` delle zone a
 gravità leggera (`gravityZones`, default 0.7, 1 = gravità azzerata del
 tutto) — questi ultimi sono i valori con cui sono stato più prudente, non avendo potuto vederli
 in azione.
