@@ -425,6 +425,70 @@ button:focus-visible {
   margin-bottom: 20px;
 }
 
+.editor-save {
+  border-top: 3px dashed var(--outline);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.editor-name-input {
+  width: 100%;
+  background: var(--bg-deep);
+  border: 3px solid var(--outline);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.editor-my-levels {
+  border-top: 3px dashed var(--outline);
+  padding-top: 16px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.my-levels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.my-level-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--bg-deep);
+  border: 3px solid var(--outline);
+  padding: 10px 12px;
+  box-shadow: 3px 3px 0 var(--outline);
+}
+
+.my-level-item.current {
+  border-color: var(--amber);
+}
+
+.my-level-name {
+  font-size: 16px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.my-level-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.my-levels-empty {
+  font-size: 15px;
+  color: var(--ink-dim);
+  padding: 8px 4px;
+}
+
 .editor-import {
   border-top: 3px solid var(--outline);
   padding-top: 16px;

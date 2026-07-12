@@ -32,6 +32,7 @@ arc-game/
 └── js/
     ├── audio.js          ← motore audio (suoni + musica sintetizzati, nessun file esterno)
     ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
+    ├── mylevels.js       ← libreria di livelli personali + codifica/decodifica condivisa
     ├── levels.js         ← definizione dei 19 livelli (modifica qui per tarare la difficoltà)
     ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, skin, tastiera, rendering)
     └── editor.js         ← editor di livelli (piazzamento, playtest, export/import codice)
@@ -142,6 +143,16 @@ ho potuto testarlo in un browser durante lo sviluppo. "📤 Esporta codice"
 genera una stringa di testo (JSON compresso in base64) che chiunque può
 incollare in "📥 Carica e gioca" per provare il tuo livello — nessun
 server, nessun account, solo copia-incolla.
+
+**Libreria personale (salvataggio nel browser)** — scrivi un nome nel campo
+sopra "💾 Salva nel browser" e premi il tasto: il livello resta salvato in
+`localStorage`, in una lista che vedi sia nell'editor stesso (per riaprirlo
+e continuare a modificarlo con ✏️) sia dal menu principale in
+"📂 I miei livelli" (per giocarlo direttamente con ▶, senza dover passare
+dall'editor). Il salvataggio è solo manuale — niente autosalvataggio — e
+resta sul dispositivo/browser attuale: non si sincronizza altrove. Salvare
+di nuovo lo stesso livello (senza aver premuto "Svuota" nel frattempo)
+aggiorna la voce esistente invece di crearne una copia.
 
 Il terreno resta sempre a larghezza piena (niente voragini disegnabili a
 mano), per ridurre il rischio di livelli impossibili da completare — se
