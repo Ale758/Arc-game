@@ -2,7 +2,8 @@
 
 Un piccolo puzzle fisico stile "disegno tecnico": trascini la pallina dal
 punto di ancoraggio, miri, rilasci e cerchi di colpire tutti i bersagli
-usando meno tiri possibile. 19 livelli, difficoltà crescente, più una sfida
+usando meno tiri possibile. 27 livelli, difficoltà crescente (gli ultimi 8,
+dal 20 al 27, sono pensati come una vera sfida), più una sfida
 giornaliera, obiettivi ed un editor per creare e condividere i tuoi livelli.
 
 **Meccanica firma:** ogni tiro lascia sul campo una traccia d'inchiostro
@@ -33,7 +34,7 @@ arc-game/
     ├── audio.js          ← motore audio (suoni + musica sintetizzati, nessun file esterno)
     ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
     ├── mylevels.js       ← libreria di livelli personali + codifica/decodifica condivisa
-    ├── levels.js         ← definizione dei 19 livelli (modifica qui per tarare la difficoltà)
+    ├── levels.js         ← definizione dei 27 livelli (modifica qui per tarare la difficoltà)
     ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, skin, tastiera, rendering)
     └── editor.js         ← editor di livelli (piazzamento, playtest, export/import codice)
 ```
