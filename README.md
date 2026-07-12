@@ -132,7 +132,9 @@ giusto di `game.js`.
 Dal menu, "✏️ Editor di livelli" apre uno strumento per disegnare i tuoi
 schemi: trascina per creare muri o trampolini, clicca per piazzare
 bersagli o spostare il lanciatore, clicca due volte per collegare una
-coppia di portali, trascina per disegnare zone vento o antigravità.
+coppia di portali, trascina per disegnare zone vento o antigravità (il
+tasto "💨 Vento" cicla tra le 4 direzioni ad ogni click quando è già lo
+strumento selezionato).
 "▶ Playtest" carica subito il livello nel motore di gioco vero (fisica
 inclusa) così puoi provarlo prima di condividerlo — è anche il modo in cui
 **io** consiglio di verificare che un livello sia risolvibile, dato che non
@@ -199,17 +201,19 @@ cima a `js/game.js`:
 - `MAX_DRAG` — quanto puoi tirare indietro la fionda
 - `engine.world.gravity.y` (in `buildLevel`) — forza di gravità
 - `PORTAL_COOLDOWN_MS` — tempo minimo tra due teletrasporti consecutivi
-- `restitution: 0.72` (in `spawnBall`) — elasticità generale della pallina
-  su tutte le superfici; più alto = rimbalza di più ovunque
+- `restitution: 0.8` e `density: 0.0028` (in `spawnBall`) — elasticità e
+  peso della pallina: più alta la prima, rimbalza di più ovunque; più bassa
+  la seconda, più è "leggera" e reattiva a vento/zone antigravità
 
 e in `js/levels.js`, livello per livello: posizione di ostacoli/bersagli/
-`par`, `fx`/`fy` delle zone di vento (`windZones`), `speed` degli ostacoli
+`par`, `fx`/`fy` delle zone di vento (`windZones` — ora possono spingere in
+qualunque delle 4 direzioni, non solo a destra), `speed` degli ostacoli
 rotanti/mobili (`type: "rotator"` o campo `movement`), `restitution` dei
-trampolini (`type: "bouncer"`, default 5.25 — un valore molto aggressivo,
-se la pallina schizza fuori schermo quasi sempre è la prima cosa da
-abbassare) e `strength` delle zone a
-gravità leggera (`gravityZones`, default 0.7, 1 = gravità azzerata del
-tutto) — questi ultimi sono i valori con cui sono stato più prudente, non avendo potuto vederli
+trampolini (`type: "bouncer"`, default 10.5 — un valore estremo, se la
+pallina schizza fuori schermo quasi ad ogni tiro è la prima cosa da
+abbassare) e `strength` delle zone a gravità leggera (`gravityZones`,
+default 2.1 — con valori sopra 1 la gravità non si annulla soltanto, si
+inverte: la pallina sale) — questi ultimi sono i valori con cui sono stato più prudente, non avendo potuto vederli
 in azione.
 
 ## 2. Pubblicare su GitHub

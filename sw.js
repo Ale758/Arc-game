@@ -6,16 +6,16 @@
   nuova invece di restare bloccati su quella vecchia in cache.
 */
 
-const CACHE_NAME = "arc-game-v7";
+const CACHE_NAME = "arc-game-v8";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=7",
-  "./js/audio.js?v=7",
-  "./js/achievements.js?v=7",
-  "./js/levels.js?v=7",
-  "./js/game.js?v=7",
-  "./js/editor.js?v=7",
+  "./style.css?v=8",
+  "./js/audio.js?v=8",
+  "./js/achievements.js?v=8",
+  "./js/levels.js?v=8",
+  "./js/game.js?v=8",
+  "./js/editor.js?v=8",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
