@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=11" />
   <script>
     // Rende il gioco installabile e disponibile offline. Se il browser non
     // supporta i service worker, non succede nulla di male: il gioco
@@ -107,7 +107,7 @@
       <div id="overlay-achievements" class="overlay hidden">
         <div class="panel">
           <div class="panel-header">
-            <p class="panel-title">OBIETTIVI <span id="achievements-count">0/8</span></p>
+            <p class="panel-title">OBIETTIVI <span id="achievements-count">0/11</span></p>
             <button id="btn-achievements-close" class="hud-btn" aria-label="Chiudi">✕</button>
           </div>
           <div id="achievements-list" class="achievements-list"></div>
@@ -188,6 +188,7 @@
           <button id="tool-portal" class="tool-btn" title="Piazza un portale: due clic per la coppia">🌀 Portale</button>
           <button id="tool-wind" class="tool-btn" title="Disegna una zona vento (trascina). Riclicca il tasto per cambiare direzione.">💨 Vento →</button>
           <button id="tool-gravity" class="tool-btn" title="Disegna una zona antigravità (trascina)">🎈 Antigrav.</button>
+          <button id="tool-move" class="tool-btn" title="Trascina un oggetto già piazzato per spostarlo">✋ Sposta</button>
           <button id="tool-delete" class="tool-btn" title="Cancella un oggetto (clic)">✕ Cancella</button>
         </div>
         <button id="btn-editor-clear" class="hud-btn">🗑 Svuota</button>
@@ -245,11 +246,11 @@
       document.write('<script src="https://unpkg.com/matter-js@0.19.0/build/matter.min.js"><\/script>');
     }
   </script>
-  <script src="js/audio.js?v=10"></script>
-  <script src="js/achievements.js?v=10"></script>
-  <script src="js/levels.js?v=10"></script>
-  <script src="js/mylevels.js?v=10"></script>
-  <script src="js/game.js?v=10"></script>
-  <script src="js/editor.js?v=10"></script>
+  <script src="js/audio.js?v=11"></script>
+  <script src="js/achievements.js?v=11"></script>
+  <script src="js/levels.js?v=11"></script>
+  <script src="js/mylevels.js?v=11"></script>
+  <script src="js/game.js?v=11"></script>
+  <script src="js/editor.js?v=11"></script>
 </body>
 </html>

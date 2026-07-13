@@ -32,7 +32,7 @@ arc-game/
 ├── icons/             ← icone dell'app (generate in stile pixel art)
 └── js/
     ├── audio.js          ← motore audio (suoni + musica sintetizzati, nessun file esterno)
-    ├── achievements.js   ← definizione e salvataggio degli 8 obiettivi
+    ├── achievements.js   ← definizione e salvataggio degli 11 obiettivi
     ├── mylevels.js       ← libreria di livelli personali + codifica/decodifica condivisa
     ├── levels.js         ← definizione dei 27 livelli (modifica qui per tarare la difficoltà)
     ├── game.js           ← motore di gioco (fisica, inchiostro, portali/vento, skin, tastiera, rendering)
@@ -122,12 +122,22 @@ questa scala. Logica in `game.js`, cerca `updateDailyStreak`.
 
 ## Obiettivi
 
-8 obiettivi sbloccabili (primo livello, livello senza segni d'inchiostro,
+11 obiettivi sbloccabili (primo livello, livello senza segni d'inchiostro,
 completamento in un solo tiro, tutti i livelli a 3 stelle, un livello con
-portale, serie di 3 e 7 giorni, primo livello esportato dall'editor).
-Definiti in `js/achievements.js`; per aggiungerne uno nuovo basta aggiungere
-una voce a `DEFS` e chiamare `Achievements.unlock('tuo-id')` nel punto
-giusto di `game.js`.
+portale/trampolino/zona a gravità leggera, serie di 3 e 7 giorni, primo
+livello esportato dall'editor, tutti i livelli del pacchetto "vera sfida"
+20-27). Definiti in `js/achievements.js`; per aggiungerne uno nuovo basta
+aggiungere una voce a `DEFS` e chiamare `Achievements.unlock('tuo-id')` nel
+punto giusto di `game.js`.
+
+## Aiuto contestuale sulle meccaniche
+
+La prima volta che una meccanica (portale, corrente, ingranaggio,
+trampolino, zona a gravità leggera) compare davvero in un livello — in
+qualunque modalità, non solo nei livelli ufficiali — un piccolo messaggio
+la spiega brevemente. Una volta visto, non si ripete più (salvato in
+`localStorage`, chiave `arc-game-mechanic-hints-v1`). Logica in
+`maybeShowMechanicHints()` in `game.js`.
 
 ## Editor di livelli
 
@@ -136,7 +146,9 @@ schemi: trascina per creare muri o trampolini, clicca per piazzare
 bersagli o spostare il lanciatore, clicca due volte per collegare una
 coppia di portali, trascina per disegnare zone vento o antigravità (il
 tasto "💨 Vento" cicla tra le 4 direzioni ad ogni click quando è già lo
-strumento selezionato).
+strumento selezionato). Lo strumento "✋ Sposta" trascina un oggetto già
+piazzato (muro, trampolino, bersaglio, portale, zona vento/antigravità)
+nella nuova posizione, senza doverlo cancellare e ridisegnare.
 "▶ Playtest" carica subito il livello nel motore di gioco vero (fisica
 inclusa) così puoi provarlo prima di condividerlo — è anche il modo in cui
 **io** consiglio di verificare che un livello sia risolvibile, dato che non
